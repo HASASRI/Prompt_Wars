@@ -36,15 +36,35 @@ const storySchema = z.object({
   chapters: z.array(chapterSchema).min(3).max(5),
 });
 
+// Strict reading-level rules per age so young kids get truly simple wording.
+function readingLevel(age: number): string {
+  if (age <= 6)
+    return `READING LEVEL (age 6, beginning reader) — STRICT: every sentence 4-8 words. Only simple present or simple past tense. One idea per sentence. No commas joining clauses, no semicolons, no passive voice, no "which/whom/although/however". Use only very common 1-2 syllable words a 6-year-old says daily (e.g. "big", "wet", "sun", "run"). Explain any topic word with tiny words right away ("Rain falls. It is water."). Questions under 10 words; each option 1-5 words. Paragraphs of 2-3 sentences.`;
+  if (age === 7)
+    return `READING LEVEL (age 7) — STRICT: sentences 6-10 words. Simple tenses. Only joiners "and", "but", "so", "because". Everyday words; at most one new topic word per chapter, explained simply. No passive voice or complex clauses. Questions under 12 words; options 1-6 words.`;
+  if (age === 8)
+    return `READING LEVEL (age 8) — sentences 8-12 words, early chapter-book style. Simple cause-and-effect ("so", "because", "when"). Introduce topic words with clear clues in the same sentence. Avoid long multi-clause sentences. Options under 8 words.`;
+  if (age === 9)
+    return `READING LEVEL (age 9) — sentences 10-14 words with some variety. Introductory clauses okay. Topic vocabulary allowed when explained. Keep grammar clear and friendly.`;
+  if (age === 10)
+    return `READING LEVEL (age 10) — sentences 10-16 words, varied structure, some figurative language. Proper topic vocabulary with brief explanations.`;
+  return `READING LEVEL (age ${age}) — age-appropriate middle-grade vocabulary and varied sentences.`;
+}
+
 function buildPrompt(request: StoryRequest): string {
   const chapterCount = request.length === "Short" ? 3 : request.length === "Long" ? 5 : 4;
+  const young = request.age <= 7;
   return [
     `Write an interactive learning story for a child age ${request.age}.`,
     `Topic to teach: ${request.topic}. Story world: ${request.world}. Difficulty: ${request.difficulty}.`,
+    readingLevel(request.age),
+    `The reading level rules apply to ALL text: chapter text, titles, questions, options, explanations, and reteach. Difficulty changes the challenge of the idea, never the hardness of the words.`,
     `Requirements:`,
     `- Exactly ${chapterCount} chapters. All chapters except the finale end with a checkpoint quiz about ONE core concept of the topic; the finale's checkpoint is null.`,
-    `- Story first: a vivid adventure in the ${request.world} world where the hero must USE the concept to progress. Vocabulary suited to age ${request.age}, difficulty "${request.difficulty}".`,
-    `- Each chapter's text is 3-5 short paragraphs separated by blank lines.`,
+    `- Story first: a vivid adventure in the ${request.world} world where the hero must USE the concept to progress.`,
+    young
+      ? `- Each chapter's text is 2-3 very short paragraphs separated by blank lines.`
+      : `- Each chapter's text is 3-5 short paragraphs separated by blank lines.`,
     `- Each checkpoint: a clear question, exactly 4 options, correctIndex (0-3), a short encouraging explanation of the right answer, and a "reteach" text that re-explains the concept a different, simpler way (shown when the child answers wrong).`,
     `- misconceptionIndex points at the wrong option that reflects the classic misconception about the concept; misconception names that misconception in one sentence for the parent report.`,
     `- characterSheet: one paragraph fixing the exact look of the hero and recurring characters (name, age, hair, skin, clothing colors, distinctive items) so illustrations stay consistent.`,
