@@ -7,10 +7,10 @@ import { AVATARS, averageScore, learningMinutes, learningStreak } from "../lib/p
 export const Route = createFileRoute("/profile")({
   head: () => ({
     meta: [
-      { title: "My Profile — StoryQuest AI" },
-      { name: "description", content: "Your StoryQuest profile, learning streak and progress." },
-      { property: "og:title", content: "My Profile — StoryQuest AI" },
-      { property: "og:description", content: "Your StoryQuest profile, learning streak and progress." },
+      { title: "My Profile — Katha" },
+      { name: "description", content: "Your Katha profile, learning streak and progress." },
+      { property: "og:title", content: "My Profile — Katha" },
+      { property: "og:description", content: "Your Katha profile, learning streak and progress." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

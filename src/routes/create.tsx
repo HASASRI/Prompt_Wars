@@ -28,12 +28,12 @@ export const Route = createFileRoute("/create")({
   },
   head: () => ({
     meta: [
-      { title: "Create a Story — StoryQuest AI" },
+      { title: "Create a Story — Katha" },
       {
         name: "description",
-        content: "Pick an age, a topic, and a world. StoryQuest AI builds an adaptive learning adventure.",
+        content: "Pick an age, a topic, and a world. Katha builds an adaptive learning adventure.",
       },
-      { property: "og:title", content: "Create a Story — StoryQuest AI" },
+      { property: "og:title", content: "Create a Story — Katha" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

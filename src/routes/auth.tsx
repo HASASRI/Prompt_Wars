@@ -6,9 +6,9 @@ import { lovable } from "@/integrations/lovable/index";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign In — StoryQuest AI" },
+      { title: "Sign In — Katha" },
       { name: "description", content: "Sign in to save your stories and learning reports." },
-      { property: "og:title", content: "Sign In — StoryQuest AI" },
+      { property: "og:title", content: "Sign In — Katha" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

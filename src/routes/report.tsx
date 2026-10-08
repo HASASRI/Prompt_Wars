@@ -5,12 +5,12 @@ import { computeMastery, engagementMinutes } from "../lib/adaptive";
 export const Route = createFileRoute("/report")({
   head: () => ({
     meta: [
-      { title: "Learning Report — StoryQuest AI" },
+      { title: "Learning Report — Katha" },
       {
         name: "description",
         content: "Concept mastery, misconceptions, and engagement from your child's story quests.",
       },
-      { property: "og:title", content: "Learning Report — StoryQuest AI" },
+      { property: "og:title", content: "Learning Report — Katha" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

@@ -82,13 +82,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "StoryQuest AI" },
+      { title: "Katha — AI-Powered Adaptive Learning Adventures" },
       {
         name: "description",
         content:
-          "StoryQuest AI turns school concepts into interactive adventures—and checks whether the child truly understood them.",
+          "Katha turns school concepts into interactive adventures—and checks whether the child truly understood them.",
       },
-      { property: "og:title", content: "StoryQuest AI" },
+      { property: "og:title", content: "Katha — AI-Powered Adaptive Learning Adventures" },
       {
         property: "og:description",
         content:

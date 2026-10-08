@@ -6,7 +6,7 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-6 px-6 py-14 md:flex-row md:items-center">
         <div>
           <span className="font-display text-2xl font-extrabold">
-            StoryQuest<span className="text-flame">AI</span>
+            Katha
           </span>
           <p className="mt-1 text-sm text-paper/50">
             Every story adapts. Every child learns.

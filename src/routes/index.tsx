@@ -7,13 +7,13 @@ import { AGE_BANDS, suggestionsForAge } from "../lib/suggestions";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "StoryQuest AI — Stories children can't stop reading" },
+      { title: "Katha — Every story adapts. Every child learns." },
       {
         name: "description",
         content:
-          "StoryQuest AI turns school concepts into interactive adventures—and checks whether the child truly understood them.",
+          "Katha turns school concepts into interactive adventures—and checks whether the child truly understood them.",
       },
-      { property: "og:title", content: "StoryQuest AI — Stories children can't stop reading" },
+      { property: "og:title", content: "Katha — Every story adapts. Every child learns." },
       {
         property: "og:description",
         content:
@@ -95,14 +95,14 @@ function Index() {
         <div className="relative mx-auto grid max-w-[1440px] items-center gap-14 px-6 py-20 lg:grid-cols-2">
           <div>
             <span className="inline-block -rotate-2 bg-ink px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-paper">
-              Adaptive AI quests
+              AI-Powered Adaptive Learning Adventures
             </span>
             <h1 className="mt-6 font-display text-5xl font-extrabold uppercase leading-[0.92] sm:text-6xl lg:text-[4.5rem]">
               <span className="block">Stories children can't stop reading.</span>
               <span className="block text-flame">Lessons they actually remember.</span>
             </h1>
             <p className="mt-6 max-w-md text-lg font-medium text-ink/70">
-              StoryQuest AI turns school concepts into interactive adventures—and checks
+              Katha turns school concepts into interactive adventures—and checks
               whether the child truly understood them.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">

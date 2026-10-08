@@ -14,7 +14,7 @@ import {
 export const Route = createFileRoute("/story/$storyId")({
   head: () => ({
     meta: [
-      { title: "Story Player — StoryQuest AI" },
+      { title: "Story Player — Katha" },
       { name: "description", content: "Read the adventure and clear its learning checkpoints." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
