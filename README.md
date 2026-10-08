@@ -26,9 +26,6 @@ npm run dev
 <img width="1421" height="655" alt="Screenshot (46)" src="https://github.com/user-attachments/assets/d49f08e5-e243-414d-89f1-b8134c37b71e" />
 <img width="1426" height="680" alt="Screenshot (47)" src="https://github.com/user-attachments/assets/38cefb85-1f8b-4970-8de3-9c73e57e2d24" />
 
-Yes — these are likely the **details you should include in your LinkedIn post**. For Katha, I would keep them short and clear:
-
----
 
 🚀 **Introducing Katha — AI-Powered Learning Through Stories**
 
@@ -42,7 +39,7 @@ Katha converts school concepts into **interactive adventure stories**. The learn
 
 ### ⚙️ How the Solution Works
 
-1. Child selects **age, subject/topic, story world, difficulty and length**.
+1. Can selects **age, subject/topic, story world, difficulty and length**.
 2. Katha creates an interactive learning adventure.
 3. Each chapter contains **visuals, narration and learning checkpoints**.
 4. The child's answers are evaluated to identify **mastery and misconceptions**.
