@@ -15,8 +15,17 @@ import { validateStoryRequest } from "../lib/validation";
 import { buildLocalStory } from "../lib/local-generator";
 import { saveStory } from "../lib/story-store";
 import { generateStory } from "../lib/story.functions";
+import { suggestionsForAge, type Subject } from "../lib/suggestions";
 
 export const Route = createFileRoute("/create")({
+  validateSearch: (s: Record<string, unknown>): { age?: number; topic?: string; subject?: Subject } => {
+    const age = Number(s.age);
+    return {
+      ...(Number.isInteger(age) && age >= MIN_AGE && age <= MAX_AGE ? { age } : {}),
+      ...(typeof s.topic === "string" ? { topic: s.topic.slice(0, MAX_TOPIC_LENGTH) } : {}),
+      ...(s.subject === "science" || s.subject === "math" ? { subject: s.subject } : {}),
+    };
+  },
   head: () => ({
     meta: [
       { title: "Create a Story — StoryQuest AI" },
@@ -56,8 +65,10 @@ function OptionPill({
 
 function CreateStory() {
   const navigate = useNavigate();
-  const [age, setAge] = useState(9);
-  const [topic, setTopic] = useState("");
+  const search = Route.useSearch();
+  const [age, setAge] = useState(search.age ?? 9);
+  const [topic, setTopic] = useState(search.topic ?? "");
+  const [subject, setSubject] = useState<Subject>(search.subject ?? "science");
   const [world, setWorld] = useState<StoryWorld>("Sky Pirates");
   const [difficulty, setDifficulty] = useState<Difficulty>("Adventurous");
   const [length, setLength] = useState<StoryLength>("Medium");
@@ -108,6 +119,40 @@ function CreateStory() {
               <OptionPill key={a} selected={age === a} onClick={() => setAge(a)}>
                 {a}
               </OptionPill>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-2 border-ink bg-white p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="font-display text-sm font-bold uppercase tracking-widest">
+              Suggested for age {age}
+            </p>
+            <div className="flex gap-2">
+              {(["science", "math"] as const).map((s) => (
+                <OptionPill key={s} selected={subject === s} onClick={() => setSubject(s)}>
+                  {s === "science" ? "🔬 Science" : "📐 Math"}
+                </OptionPill>
+              ))}
+            </div>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {suggestionsForAge(age, subject).map((q) => (
+              <button
+                key={q.title}
+                type="button"
+                onClick={() => {
+                  setTopic(q.topic);
+                  setWorld(q.world);
+                  setDifficulty(q.difficulty);
+                }}
+                className={`border-2 border-ink p-3 text-left transition-colors hover:bg-ink hover:text-paper ${
+                  topic === q.topic ? "bg-flame/15" : ""
+                }`}
+              >
+                <p className="font-display font-extrabold">{q.title}</p>
+                <p className="mt-1 text-xs font-medium opacity-70">{q.blurb}</p>
+              </button>
             ))}
           </div>
         </div>
