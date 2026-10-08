@@ -15,6 +15,7 @@ export function SiteHeader() {
   const navigate = useNavigate();
   const [signedIn, setSignedIn] = useState(false);
   const [avatar, setAvatar] = useState("🦊");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const loadAvatar = () =>
