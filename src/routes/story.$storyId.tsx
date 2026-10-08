@@ -25,6 +25,56 @@ export const Route = createFileRoute("/story/$storyId")({
 
 type Phase = "reading" | "checkpoint" | "reteach" | "feedback" | "finished";
 
+function ReadAloud({ text, age }: { text: string; age: number }) {
+  const [state, setState] = useState<"idle" | "playing" | "paused">("idle");
+  const [supported, setSupported] = useState(false);
+  useEffect(() => {
+    setSupported(typeof window !== "undefined" && "speechSynthesis" in window);
+    return () => {
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    };
+  }, []);
+  if (!supported) return null;
+  const synth = window.speechSynthesis;
+  function play() {
+    if (state === "paused") {
+      synth.resume();
+      setState("playing");
+      return;
+    }
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(text.replace(/[“”]/g, '"'));
+    u.rate = age <= 7 ? 0.8 : age <= 8 ? 0.9 : 1;
+    u.pitch = 1.1;
+    const voice = synth.getVoices().find((v) => v.lang.startsWith("en"));
+    if (voice) u.voice = voice;
+    u.onend = () => setState("idle");
+    u.onerror = () => setState("idle");
+    synth.speak(u);
+    setState("playing");
+  }
+  const btn =
+    "border-2 border-ink px-3 py-1.5 font-display text-xs font-bold uppercase tracking-wide transition-colors hover:bg-ink hover:text-paper";
+  return (
+    <div className="mt-3 flex gap-2">
+      {state === "playing" ? (
+        <button type="button" className={btn} onClick={() => { synth.pause(); setState("paused"); }}>
+          ⏸ Pause
+        </button>
+      ) : (
+        <button type="button" className={`${btn} bg-sky/20`} onClick={play}>
+          🔊 {state === "paused" ? "Resume" : "Read aloud"}
+        </button>
+      )}
+      {state !== "idle" && (
+        <button type="button" className={btn} onClick={() => { synth.cancel(); setState("idle"); }}>
+          ⏹ Stop
+        </button>
+      )}
+    </div>
+  );
+}
+
 function StoryPlayer() {
   const { storyId } = useParams({ from: "/story/$storyId" });
   const story = useStories().find((s) => s.id === storyId);
@@ -213,6 +263,15 @@ function StoryPlayer() {
               Chapter {chapterIndex + 1}
             </span>
             <h2 className="mt-1 font-display text-2xl font-extrabold uppercase">{chapter.title}</h2>
+            <ReadAloud
+              key={`${chapterIndex}-${phase}`}
+              age={story.age}
+              text={
+                phase === "checkpoint" && checkpoint
+                  ? `${checkpoint.question} ${checkpoint.options.map((o, i) => `Choice ${i + 1}: ${o.text}.`).join(" ")}`
+                  : `${chapter.title}. ${phase === "reteach" && checkpoint ? checkpoint.reteach : chapter.text}`
+              }
+            />
             <div className="mt-4 space-y-3 text-lg font-medium leading-relaxed">
               {(phase === "reteach" && checkpoint ? checkpoint.reteach : chapter.text)
                 .split(/\n\s*\n/)
