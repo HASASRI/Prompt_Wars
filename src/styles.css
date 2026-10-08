@@ -42,16 +42,22 @@
   --color-sky: var(--sky);
   --color-ink: var(--ink);
   --color-paper: var(--paper);
-  --font-display: "Bricolage Grotesque", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --color-sun: var(--sun);
+  --color-mint: var(--mint);
+  --color-lilac: var(--lilac);
+  --font-display: "Fredoka", "Quicksand", sans-serif;
+  --font-body: "Quicksand", "Fredoka", sans-serif;
 }
 
 :root {
-  --radius: 0.75rem;
-  --ink: #111111;
-  --paper: #f6f4ee;
-  --flame: #ff3d2e;
-  --sky: #1f5cff;
+  --radius: 1.25rem;
+  --ink: #2a2350;
+  --paper: #fff8ee;
+  --flame: #ff5a76;
+  --sky: #2f9bf0;
+  --sun: #ffb703;
+  --mint: #10b981;
+  --lilac: #8b5cf6;
   --background: var(--paper);
   --foreground: var(--ink);
   --card: #ffffff;
@@ -60,10 +66,10 @@
   --popover-foreground: var(--ink);
   --primary: var(--ink);
   --primary-foreground: var(--paper);
-  --secondary: #edeae0;
+  --secondary: #f3ecff;
   --secondary-foreground: var(--ink);
-  --muted: #edeae0;
-  --muted-foreground: #6b6b66;
+  --muted: #f3ecff;
+  --muted-foreground: #6b6491;
   --accent: var(--flame);
   --accent-foreground: var(--paper);
   --destructive: var(--flame);
@@ -99,23 +105,39 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-body);
+    font-weight: 500;
+    background-image:
+      radial-gradient(circle at 8% 12%, color-mix(in oklab, var(--sun) 22%, transparent) 0 120px, transparent 260px),
+      radial-gradient(circle at 92% 8%, color-mix(in oklab, var(--lilac) 18%, transparent) 0 140px, transparent 320px),
+      radial-gradient(circle at 85% 85%, color-mix(in oklab, var(--sky) 14%, transparent) 0 160px, transparent 360px);
+    background-attachment: fixed;
   }
+  /* Soft, friendly shapes everywhere instead of sharp boxes. */
+  .border-2:not(.rounded-full) { border-radius: 1.25rem; }
+  .border-2 { border-color: color-mix(in oklab, var(--ink) 85%, transparent); }
+  button, a { border-radius: 9999px; }
+  .font-display { letter-spacing: 0.01em; }
+  .uppercase.font-display { text-transform: none; }
+  h1.font-display, h2.font-display { text-transform: none; }
+  .text-flame { color: var(--flame); }
 }
 
 @utility stripes {
   background-image: repeating-linear-gradient(
     45deg,
-    var(--ink) 0 16px,
-    var(--flame) 16px 32px
+    var(--flame) 0 16px,
+    var(--sun) 16px 32px,
+    var(--sky) 32px 48px,
+    var(--lilac) 48px 64px
   );
 }
 
 @utility shadow-brutal {
-  box-shadow: 6px 6px 0 0 var(--ink);
+  box-shadow: 0 6px 0 0 color-mix(in oklab, var(--lilac) 45%, transparent), 0 14px 30px -12px color-mix(in oklab, var(--ink) 35%, transparent);
 }
 
 @utility shadow-brutal-flame {
-  box-shadow: 12px 12px 0 0 var(--flame);
+  box-shadow: 0 0 0 6px var(--sun), 0 20px 50px -10px color-mix(in oklab, var(--flame) 60%, transparent);
 }
 
 @keyframes page-in {
