@@ -101,7 +101,7 @@ export function SiteHeader() {
           )}
           <Link
             to="/create"
-            className="border-2 border-ink bg-flame px-4 py-2 font-display text-sm font-bold uppercase tracking-wide text-paper transition-transform hover:-rotate-1 hover:scale-[1.03]"
+            className="hidden border-2 border-ink bg-flame px-4 py-2 font-display text-sm font-bold uppercase tracking-wide text-paper transition-transform hover:-rotate-1 hover:scale-[1.03] sm:inline-block"
           >
             🚀 Start Learning
           </Link>
