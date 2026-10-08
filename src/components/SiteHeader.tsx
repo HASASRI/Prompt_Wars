@@ -49,7 +49,7 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center gap-2">
           <span className="inline-block h-6 w-6 rotate-45 bg-flame" />
           <span className="font-display text-xl font-extrabold tracking-tight">
-            StoryQuest<span className="text-flame">AI</span>
+            Katha
           </span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-semibold md:flex">

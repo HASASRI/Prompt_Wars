@@ -3,13 +3,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "How It Works — StoryQuest AI" },
+      { title: "How It Works — Katha" },
       {
         name: "description",
         content:
-          "Generate → Engage → Diagnose → Adapt → Report. How StoryQuest AI checks real understanding.",
+          "Generate → Engage → Diagnose → Adapt → Report. How Katha checks real understanding.",
       },
-      { property: "og:title", content: "How It Works — StoryQuest AI" },
+      { property: "og:title", content: "How It Works — Katha" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -60,7 +60,7 @@ function About() {
         A story that changes when the child <span className="text-flame">struggles</span>
       </h1>
       <p className="mt-4 max-w-xl text-lg font-medium text-ink/70">
-        StoryQuest AI is not just an AI story generator. It demonstrates whether the child
+        Katha is not just an AI story generator. It demonstrates whether the child
         actually understood the concept — and adapts when they didn't.
       </p>
 

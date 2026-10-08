@@ -4,7 +4,7 @@ import { useSessions, useStories } from "../lib/story-store";
 export const Route = createFileRoute("/stories")({
   head: () => ({
     meta: [
-      { title: "My Stories — StoryQuest AI" },
+      { title: "My Stories — Katha" },
       { name: "description", content: "Every quest you've built, ready to replay." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
