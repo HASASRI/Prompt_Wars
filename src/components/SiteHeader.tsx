@@ -65,6 +65,15 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+            className="flex h-10 w-10 items-center justify-center border-2 border-ink bg-white transition-colors hover:bg-ink hover:text-paper md:hidden"
+          >
+            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
           {signedIn && (
             <Link
               to="/profile"
