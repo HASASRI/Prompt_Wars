@@ -254,7 +254,7 @@ function StoryPlayer() {
             <ChapterImage
               src={chapter.imageUrl}
               alt={`Illustration: ${chapter.title}`}
-              loading={painting === chapterIndex}
+              loading={painting !== null && painting <= chapterIndex}
             />
           </div>
           {/* Story text */}
