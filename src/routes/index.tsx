@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import heroExplorer from "../assets/hero-explorer.jpg";
 import { DEMO_STORY } from "../lib/demo-story";
+import { AGE_BANDS, suggestionsForAge } from "../lib/suggestions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,32 +26,64 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const SAMPLE_QUESTS = [
-  {
-    tag: "Math · Grade 4",
-    tagColor: "text-flame",
-    title: "Fraction Peaks",
-    blurb: "Climb a mountain of halves, thirds and quarters to reach the summit.",
-    chapters: "4 chapters",
-    arrowColor: "text-flame",
-  },
-  {
-    tag: "Science · Grade 5",
-    tagColor: "text-sky",
-    title: "The Water Cycle Run",
-    blurb: "Race a raindrop from cloud to river and learn evaporation en route.",
-    chapters: "5 chapters",
-    arrowColor: "text-sky",
-  },
-  {
-    tag: "Reading · Grade 3",
-    tagColor: "text-flame",
-    title: "The Word Heist",
-    blurb: "Crack vocabulary codes to sneak past the museum guards.",
-    chapters: "6 chapters",
-    arrowColor: "text-flame",
-  },
-];
+function QuestPicker() {
+  const [age, setAge] = useState(8);
+  const tab =
+    "border-2 border-ink px-4 py-2 font-display text-sm font-bold transition-colors";
+  return (
+    <section className="border-b-2 border-ink bg-paper">
+      <div className="mx-auto max-w-[1440px] px-6 py-16">
+        <h2 className="font-display text-4xl font-extrabold uppercase">Pick a quest to begin</h2>
+        <p className="mt-2 font-medium text-ink/60">3 Science and 3 Math quests for every age.</p>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {AGE_BANDS.map((b) => {
+            const on = age >= b.min && age <= b.max;
+            return (
+              <button
+                key={b.min}
+                type="button"
+                onClick={() => setAge(b.min)}
+                className={`${tab} ${on ? "bg-flame text-paper" : "bg-white hover:bg-ink hover:text-paper"}`}
+              >
+                Ages {b.min}–{b.max}
+              </button>
+            );
+          })}
+        </div>
+        {(["science", "math"] as const).map((subject) => (
+          <div key={subject} className="mt-10">
+            <h3 className={`font-display text-2xl font-extrabold uppercase ${subject === "science" ? "text-sky" : "text-flame"}`}>
+              {subject === "science" ? "🔬 Science session" : "📐 Math session"}
+            </h3>
+            <div className="mt-4 grid gap-6 md:grid-cols-3">
+              {suggestionsForAge(age, subject).map((quest) => (
+                <article key={quest.title} className="group overflow-hidden border-2 border-ink bg-white">
+                  <div className="stripes h-3 w-full" />
+                  <div className="p-5">
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-ink/50">
+                      {quest.topic}
+                    </span>
+                    <h4 className="mt-1 font-display text-2xl font-extrabold">{quest.title}</h4>
+                    <p className="mt-2 text-sm font-medium text-ink/60">{quest.blurb}</p>
+                    <div className="mt-4 flex justify-end">
+                      <Link
+                        to="/create"
+                        search={{ age, topic: quest.topic, subject }}
+                        className={`inline-block font-display font-bold transition-transform group-hover:translate-x-1 ${subject === "science" ? "text-sky" : "text-flame"}`}
+                      >
+                        Start →
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 function Index() {
   return (
@@ -247,34 +281,8 @@ function Index() {
       </section>
 
       {/* Quest picker */}
-      <section className="border-b-2 border-ink bg-paper">
-        <div className="mx-auto max-w-[1440px] px-6 py-16">
-          <h2 className="font-display text-4xl font-extrabold uppercase">Pick a quest to begin</h2>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {SAMPLE_QUESTS.map((quest) => (
-              <article key={quest.title} className="group overflow-hidden border-2 border-ink bg-white">
-                <div className="stripes h-3 w-full" />
-                <div className="p-5">
-                  <span className={`text-[11px] font-bold uppercase tracking-widest ${quest.tagColor}`}>
-                    {quest.tag}
-                  </span>
-                  <h3 className="mt-1 font-display text-2xl font-extrabold">{quest.title}</h3>
-                  <p className="mt-2 text-sm font-medium text-ink/60">{quest.blurb}</p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-xs font-semibold text-ink/50">{quest.chapters}</span>
-                    <Link
-                      to="/create"
-                      className={`inline-block font-display font-bold transition-transform group-hover:translate-x-1 ${quest.arrowColor}`}
-                    >
-                      Enter →
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <QuestPicker />
+
     </div>
   );
 }
