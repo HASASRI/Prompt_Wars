@@ -107,6 +107,23 @@ export function SiteHeader() {
           </Link>
         </div>
       </div>
+      {menuOpen && (
+        <nav className="border-t-2 border-ink bg-paper md:hidden">
+          <div className="mx-auto flex max-w-[1440px] flex-col px-6 py-2">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setMenuOpen(false)}
+                className="border-b border-ink/10 py-3 font-display text-base font-bold uppercase tracking-wide transition-colors last:border-b-0 hover:text-flame"
+                activeProps={{ className: "text-flame" }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </nav>
+      )}
     </header>
   );
 }
