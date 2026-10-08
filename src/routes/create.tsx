@@ -19,11 +19,11 @@ import { suggestionsForAge, type Subject } from "../lib/suggestions";
 
 export const Route = createFileRoute("/create")({
   validateSearch: (s: Record<string, unknown>): { age?: number; topic?: string; subject?: Subject } => {
-    const age = Number(s.age);
+    const age = Number(s["age"]);
     return {
       ...(Number.isInteger(age) && age >= MIN_AGE && age <= MAX_AGE ? { age } : {}),
-      ...(typeof s.topic === "string" ? { topic: s.topic.slice(0, MAX_TOPIC_LENGTH) } : {}),
-      ...(s.subject === "science" || s.subject === "math" ? { subject: s.subject } : {}),
+      ...(typeof s["topic"] === "string" ? { topic: s["topic"].slice(0, MAX_TOPIC_LENGTH) } : {}),
+      ...(s["subject"] === "science" || s["subject"] === "math" ? { subject: s["subject"] } : {}),
     };
   },
   head: () => ({
